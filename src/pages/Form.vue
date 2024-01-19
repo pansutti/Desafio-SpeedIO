@@ -5,7 +5,7 @@
         class="pl-4 w-full resize-y block h-44 p-2 rounded-2xl resize-field"
         placeholder="Exp.: Ao ligar falar com Luiza"
         v-model="anotacoes"
-        required
+        required="true"
       ></textarea>
     </div>
     <div class="flex flex-col">
@@ -72,6 +72,10 @@ const categorizacao = ref("");
 const lembrete = ref("");
 
 const salvarAnotacao = () => {
+  if (!anotacoes.value.trim()) {
+    console.warn('A anotação não pode estar vazia.');
+    return;
+  }
   adicionarAnotacao({
     anotacoes: anotacoes.value,
     potencialNegocio: potencialNegocio.value,
@@ -88,19 +92,4 @@ const salvarAnotacao = () => {
       console.error("Erro ao salvar anotação:", error);
     });
 };
-
-const carregarAnotacoes = () => {
-  obterAnotacoes()
-    .then((anotacoesArmazenadas) => {
-      console.log("Anotações recuperadas:", anotacoesArmazenadas);
-    })
-    .catch((error) => {
-      console.error("Erro ao carregar anotações:", error);
-    });
-};
-
-onMounted(() => {
-  // Carregar anotações ao montar o componente
-  carregarAnotacoes();
-});
 </script>

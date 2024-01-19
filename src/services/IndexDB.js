@@ -54,4 +54,21 @@ const obterAnotacoes = () => {
   });
 };
 
-export { adicionarAnotacao, obterAnotacoes };
+const deletarAnotacao = (id) => {
+  return new Promise(async (resolve, reject) => {
+    const db = await openDB();
+    const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(OBJECT_STORE_NAME);
+
+    store.delete(id).onsuccess = () => {
+      resolve();
+    };
+
+    transaction.onerror = (event) => {
+      reject(event.target.error);
+    };
+  });
+};
+
+
+export { adicionarAnotacao, obterAnotacoes, deletarAnotacao };
