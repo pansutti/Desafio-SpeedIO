@@ -1,7 +1,7 @@
 <template>
   <section class="px-[30px]">
     <div class="fixed bottom-0 left-0 right-0 p-8 text-white">
-  <router-link to="/">
+  <router-link to="/form">
     <button class="w-full bg-blue-500 h-14 rounded-full flex items-center justify-center">
       <span class="text-white">+ Criar anotação</span>
     </button>

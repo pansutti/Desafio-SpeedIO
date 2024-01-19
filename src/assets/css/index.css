@@ -8,6 +8,10 @@
   display: inline-block;
 }
 
+.resize-field {
+  resize: none;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -20,10 +24,6 @@ select {
   right: 10px; 
   transform: translateY(-50%);
   pointer-events: none; 
-}
-
-input[type="date"] {
-  color: transparent;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
