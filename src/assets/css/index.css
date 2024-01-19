@@ -2,3 +2,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px; 
+  transform: translateY(-50%);
+  pointer-events: none; 
+}
+
+input[type="date"] {
+  color: transparent;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  padding-right: 1rem;
+}
+
+input[type="date"]::-moz-calendar-picker-indicator {
+  padding-right: 1rem;
+}
