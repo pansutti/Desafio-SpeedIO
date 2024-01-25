@@ -1,4 +1,4 @@
-const DB_NAME = 'NomeDoSeuBancoDeDados';
+const DB_NAME = 'CacheDesafioSpeedIO';
 const DB_VERSION = 1;
 const OBJECT_STORE_NAME = 'anotacoes';
 
@@ -24,19 +24,47 @@ const openDB = () => {
 
 const adicionarAnotacao = (anotacao) => {
   return new Promise(async (resolve, reject) => {
-    console.log('Adicionando anotação ao IndexedDB...', anotacao);
+    console.log('Adicionando/atualizando anotação no IndexedDB...', anotacao);
+
     const db = await openDB();
     const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite');
     const objectStore = transaction.objectStore(OBJECT_STORE_NAME);
 
-    const requestAdd = objectStore.add(anotacao);
+    // Verificar se já existe uma anotação com o mesmo ID
+    const existingAnotacao = anotacao.id ? await objectStore.get(anotacao.id) : null;
 
-    requestAdd.onsuccess = () => resolve();
-    requestAdd.onerror = () => reject(requestAdd.error);
+    if (existingAnotacao) {
+      // Atualizar a anotação existente
+      const requestPut = objectStore.put(anotacao);
 
-    transaction.oncomplete = () => db.close();
+      requestPut.onsuccess = () => {
+        resolve();
+      };
+
+      requestPut.onerror = () => {
+        reject(requestPut.error);
+      };
+    } else {
+      // Adicionar a nova anotação
+      const requestAdd = objectStore.add(anotacao);
+
+      requestAdd.onsuccess = () => {
+        resolve();
+      };
+
+      requestAdd.onerror = () => {
+        reject(requestAdd.error);
+      };
+    }
+
+    transaction.oncomplete = () => {
+      console.log('Transação completada com sucesso!');
+      db.close();
+      resolve();
+    };
   });
 };
+
 
 const obterAnotacoes = () => {
   return new Promise(async (resolve, reject) => {

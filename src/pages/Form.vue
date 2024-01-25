@@ -1,28 +1,25 @@
 <template>
-  <form class="px-[30px]">
+  <form class="flex flex-col items-center">
     <div>
       <textarea
-        class="pl-4 w-full resize-y block h-44 p-2 rounded-2xl resize-field"
+        class="px-4 min-w-80 resize-y block h-44 p-2 rounded-2xl resize-field"
         placeholder="Exp.: Ao ligar falar com Luiza"
         v-model="anotacoes"
-        required="true"
       ></textarea>
     </div>
-    <div class="flex flex-col">
+    <div class="flex flex-col min-w-80">
       <label class="my-4" for="potencialNegocio">Potencial de negócio</label>
       <input
         class="pl-4 resize-y block h-14 rounded-full"
         type="number"
         placeholder="R$: 00,00"
         v-model="potencialNegocio"
-        required
       />
       <label class="my-4" for="categorizacao">Categorização</label>
       <div class="custom-select">
         <select
           class="pl-4 w-full resize-y block h-14 rounded-full"
           v-model="categorizacao"
-          required
         >
           <option value="poucoImportante">Pouco Importante</option>
           <option value="medioImportante">Médio Importante</option>
@@ -36,8 +33,13 @@
         placeholder="Selecione uma Data"
         type="date"
         v-model="lembrete"
-        required
       />
+    </div>
+    <div
+      v-if="missingFields.length"
+      class="text-red-500 fixed gap-4 items-center text-center bottom-32"
+    >
+      Falta preencher: {{ missingFields.join(", ") }}
     </div>
     <div class="flex fixed gap-4 items-center bottom-0 pt-28 pb-8">
       <router-link to="/">
@@ -50,8 +52,9 @@
       </router-link>
       <router-link to="/anotation">
         <button
-          class="w-72 bg-blue-500 h-14 rounded-full flex items-center justify-center px-4"
+          class="w-64 bg-blue-500 h-14 rounded-full flex items-center justify-center px-4"
           @click="salvarAnotacao"
+          :disabled="isFormInvalid"
         >
           <span class="text-white">Salvar</span>
         </button>
@@ -63,17 +66,41 @@
 <script setup>
 import TrashCan from "vue-material-design-icons/trashcan.vue";
 import ChevronDown from "vue-material-design-icons/chevrondown.vue";
-import { ref, onMounted } from "vue";
-import { adicionarAnotacao, obterAnotacoes } from "../services/IndexDB";
+import { ref, computed } from "vue";
+import { adicionarAnotacao } from "../services/IndexDB";
 
 const anotacoes = ref("");
 const potencialNegocio = ref();
 const categorizacao = ref("");
 const lembrete = ref("");
+const isFormInvalid = computed(() => {
+  return (
+    !anotacoes.value ||
+    !lembrete.value ||
+    !potencialNegocio.value ||
+    !categorizacao.value
+  );
+});
+
+const missingFields = computed(() => {
+  const missing = [];
+  if (!anotacoes.value) {
+    missing.push("Anotações");
+  }
+  if (!potencialNegocio.value) {
+    missing.push("Potencial de negócio");
+  }
+  if (!categorizacao.value) {
+    missing.push("Categorização");
+  }
+  if (!lembrete.value) {
+    missing.push("Lembrete");
+  }
+  return missing;
+});
 
 const salvarAnotacao = () => {
-  if (!anotacoes.value.trim()) {
-    console.warn('A anotação não pode estar vazia.');
+  if (isFormInvalid.value) {
     return;
   }
   adicionarAnotacao({
