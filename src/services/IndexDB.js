@@ -30,11 +30,9 @@ const adicionarAnotacao = (anotacao) => {
     const transaction = db.transaction([OBJECT_STORE_NAME], 'readwrite');
     const objectStore = transaction.objectStore(OBJECT_STORE_NAME);
 
-    // Verificar se já existe uma anotação com o mesmo ID
     const existingAnotacao = anotacao.id ? await objectStore.get(anotacao.id) : null;
 
     if (existingAnotacao) {
-      // Atualizar a anotação existente
       const requestPut = objectStore.put(anotacao);
 
       requestPut.onsuccess = () => {
@@ -45,7 +43,6 @@ const adicionarAnotacao = (anotacao) => {
         reject(requestPut.error);
       };
     } else {
-      // Adicionar a nova anotação
       const requestAdd = objectStore.add(anotacao);
 
       requestAdd.onsuccess = () => {

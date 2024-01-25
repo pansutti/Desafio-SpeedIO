@@ -1,6 +1,5 @@
 <template>
   <section class="flex flex-col items-center">
-    <!-- Exibir as anotações recuperadas -->
     <div v-if="anotacoesRecuperadas.length">
       <ul class="list-none min-w-80">
         <li
@@ -26,7 +25,7 @@
               </button>
             </router-link>
               <p class="text-sm text-gray-500">
-                {{ formatarData(anotacao.lembrete) }}
+                {{ anotacao.lembrete }}
               </p>
             </div>
             <div class="flex items-center space-x-2">
@@ -79,7 +78,6 @@ const carregarAnotacoes = () => {
   obterAnotacoes()
     .then((anotacoesArmazenadas) => {
       console.log("Anotações salvas:", anotacoesArmazenadas);
-      // Atualiza a referência para as anotações recuperadas
       anotacoesRecuperadas.value = anotacoesArmazenadas;
     })
     .catch((error) => {
@@ -108,7 +106,6 @@ const executarExclusao = () => {
 const excluirAnotacao = (id) => {
   deletarAnotacao(id)
     .then(() => {
-      // Recarrega as anotações após a exclusão
       carregarAnotacoes();
       console.log("Anotação deletada com sucesso!");
     })
@@ -117,13 +114,7 @@ const excluirAnotacao = (id) => {
     });
 };
 
-const formatarData = (data) => {
-  const dataFormatada = new Date(data).toLocaleDateString("pt-BR");
-  return dataFormatada;
-};
-
 onMounted(() => {
-  // Carregar anotações ao montar o componente
   carregarAnotacoes();
 });
 </script>

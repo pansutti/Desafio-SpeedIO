@@ -8,13 +8,17 @@
       ></textarea>
     </div>
     <div class="flex flex-col min-w-80">
-      <label class="my-4" for="potencialNegocio">Potencial de negócio</label>
-      <input
-        class="pl-4 resize-y block h-14 rounded-full"
-        type="number"
-        placeholder="R$: 00,00"
-        v-model="potencialNegocio"
-      />
+  <label class="my-4" for="potencialNegocio">Potencial de negócio</label>
+  <div style="position: relative;">
+    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(70%); color: #000000;">R$</span>
+  </div>
+    <input
+      class="pl-10 resize-y block h-14 rounded-full"
+      type="number"
+      placeholder="00.00"
+      v-model="potencialNegocio"
+    />
+  
       <label class="my-4" for="categorizacao">Categorização</label>
       <div class="custom-select">
         <select
@@ -30,9 +34,10 @@
       <label class="my-4" for="lembrete">Lembrete</label>
       <input
         class="pl-4 resize-y block h-14 rounded-full resize-field"
-        placeholder="Selecione uma Data"
-        type="date"
+        placeholder="dd/mm/aaaa"
+        type="text"
         v-model="lembrete"
+        @input="formatarData"
       />
     </div>
     <div
@@ -98,6 +103,19 @@ const missingFields = computed(() => {
   }
   return missing;
 });
+
+const formatarData = () => {
+  let valor = lembrete.value;
+  valor = valor.replace(/\D/g, "");
+  
+  if (valor.length > 2) {
+    valor = valor.substring(0, 2) + "/" + valor.substring(2);
+  }
+  if (valor.length > 5) {
+    valor = valor.substring(0, 5) + "/" + valor.substring(5, 9);
+  }
+  lembrete.value = valor;
+};
 
 const salvarAnotacao = () => {
   if (isFormInvalid.value) {
