@@ -65,7 +65,7 @@
 
 <script setup>
 import TrashCan from "vue-material-design-icons/TrashCan.vue";
-import PaperClip from "vue-material-design-icons/PaperClip.vue";
+import PaperClip from "vue-material-design-icons/Paperclip.vue";
 import { ref, onMounted } from "vue";
 import { obterAnotacoes, deletarAnotacao } from "../services/IndexDB";
 
