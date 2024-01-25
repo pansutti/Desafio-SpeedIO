@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-import CloseIcon from "vue-material-design-icons/close.vue";
+import CloseIcon from "vue-material-design-icons/Close.vue";
 </script>
