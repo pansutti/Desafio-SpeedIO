@@ -48,10 +48,10 @@
   </router-link>
   </div>
 </dialog>
-    <div v-if="missingFields.length" class="text-red-500 fixed gap-4 items-center text-center bottom-32">
+    <div v-if="missingFields.length" class="text-red-500 items-center text-center pt-8">
       Falta preencher: {{ missingFields.join(', ') }}
     </div>
-    <div class="flex fixed gap-4 items-center bottom-0 pt-28 pb-8">
+    <div class="flex gap-4 items-center pt-28">
         <button
           class="w-14 bg-red-500 h-14 rounded-full flex justify-center items-center"
           @click="prepararExclusao()"
