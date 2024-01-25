@@ -23,5 +23,5 @@
 </template>
 
 <script setup>
-import PaperclipIcon from "vue-material-design-icons/paperclip.vue";
+import PaperclipIcon from "vue-material-design-icons/PaperClip.vue";
 </script>

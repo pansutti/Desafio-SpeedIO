@@ -72,8 +72,8 @@
 </template>
 
 <script setup>
-import TrashCan from "vue-material-design-icons/trashcan.vue";
-import ChevronDown from "vue-material-design-icons/chevrondown.vue";
+import TrashCan from "vue-material-design-icons/TrashCan.vue";
+import ChevronDown from "vue-material-design-icons/ChevronDown.vue";
 import { ref, onMounted, computed } from "vue";
 import { adicionarAnotacao, obterAnotacoes, deletarAnotacao } from "../services/IndexDB";
 import { useRouter } from "vue-router";

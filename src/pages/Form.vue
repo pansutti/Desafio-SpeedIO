@@ -69,8 +69,8 @@
 </template>
 
 <script setup>
-import TrashCan from "vue-material-design-icons/trashcan.vue";
-import ChevronDown from "vue-material-design-icons/chevrondown.vue";
+import TrashCan from "vue-material-design-icons/TrashCan.vue";
+import ChevronDown from "vue-material-design-icons/ChevronDown.vue";
 import { ref, computed } from "vue";
 import { adicionarAnotacao } from "../services/IndexDB";
 
